@@ -1,5 +1,6 @@
 plugins {
     alias(libs.plugins.android.application)
+    id("com.google.gms.google-services")
 }
 
 android {
@@ -32,6 +33,8 @@ android {
 }
 
 dependencies {
+    // Firebase Messaging
+    implementation("com.google.firebase:firebase-messaging:23.4.1")
 
     implementation(libs.appcompat)
     implementation(libs.material)
