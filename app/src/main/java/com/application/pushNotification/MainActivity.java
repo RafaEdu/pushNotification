@@ -23,5 +23,11 @@ public class MainActivity extends AppCompatActivity {
             Intent intent = new Intent(this, TimerActivity.class);
             startActivity(intent);
         });
+
+        btnAbrirLembrete.setOnClickListener(v -> {
+            Intent intent = new Intent(this, LembreteActivity.class);
+            startActivity(intent);
+        });
+
     }
 }
