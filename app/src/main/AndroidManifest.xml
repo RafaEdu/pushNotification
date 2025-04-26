@@ -32,6 +32,12 @@
             android:foregroundServiceType="dataSync">
         </service>
 
+        <service
+            android:name=".LembreteService"
+            android:exported="false"
+            android:foregroundServiceType="dataSync">
+        </service>
+
         <activity
             android:name=".MainActivity"
             android:exported="true">
