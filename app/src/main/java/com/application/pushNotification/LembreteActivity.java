@@ -7,7 +7,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
-import android.os.CountDownTimer;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TimePicker;
@@ -42,20 +41,20 @@ public class LembreteActivity extends AppCompatActivity {
             int minute = timePicker.getMinute();
 
             if (!message.isEmpty()) {
-                Calendar now = Calendar.getInstance();
-                Calendar reminderTime = Calendar.getInstance();
-                reminderTime.set(Calendar.HOUR_OF_DAY, hour);
-                reminderTime.set(Calendar.MINUTE, minute);
-                reminderTime.set(Calendar.SECOND, 0);
+                long millisUntilReminder = calculateMillisUntil(hour, minute);
 
-                if (reminderTime.before(now)) {
-                    reminderTime.add(Calendar.DATE, 1); // Se o horário já passou, agenda para o dia seguinte
+                // 👉 Iniciar o LembreteService
+                Intent serviceIntent = new Intent(this, LembreteService.class);
+                serviceIntent.putExtra(LembreteService.EXTRA_MILLIS, millisUntilReminder);
+                serviceIntent.putExtra(LembreteService.EXTRA_MESSAGE, message);
+
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                    startForegroundService(serviceIntent);
+                } else {
+                    startService(serviceIntent);
                 }
 
-                long millisUntilReminder = reminderTime.getTimeInMillis() - now.getTimeInMillis();
-                startReminderTimer(millisUntilReminder, message);
-
-                showNotification("Lembrete agendado","Seu lembrete foi agendado para as "
+                showNotification("Lembrete agendado", "Seu lembrete foi agendado para as "
                         + String.format("%02d:%02d", hour, minute));
 
                 // Voltar para MainActivity depois de agendar
@@ -84,20 +83,6 @@ public class LembreteActivity extends AppCompatActivity {
 
         return reminderTime.getTimeInMillis() - now.getTimeInMillis();
     }
-
-    private void startReminderTimer(long millisUntilReminder, String message) {
-        new CountDownTimer(millisUntilReminder, 1000) {
-            @Override
-            public void onTick(long millisUntilFinished) {
-                // Você pode ignorar aqui, não precisa fazer nada
-            }
-            @Override
-            public void onFinish() {
-                showNotification("Lembrete:", message);
-            }
-        }.start();
-    }
-
 
     private void showNotification(String title, String message) {
         Intent intent = new Intent(this, MainActivity.class);
