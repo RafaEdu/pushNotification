@@ -1,3 +1,5 @@
+package com.application.pushNotification;
+
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
@@ -21,7 +23,6 @@ public class ReminderReceiver extends BroadcastReceiver {
             manager.createNotificationChannel(channel);
         }
 
-        // Criação da notificação
         NotificationCompat.Builder builder = new NotificationCompat.Builder(context, "lembrete_channel")
                 .setSmallIcon(android.R.drawable.ic_dialog_info)
                 .setContentTitle("Lembrete")

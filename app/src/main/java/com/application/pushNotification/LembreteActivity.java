@@ -18,12 +18,12 @@ public class LembreteActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.lembrete);
+        setContentView(R.layout.activity_lembrete);
 
         editMessage = findViewById(R.id.editMessage);
         editSeconds = findViewById(R.id.editSeconds);
         btnSetReminder = findViewById(R.id.btnSetReminder);
-
+        /*aaa*/
         btnSetReminder.setOnClickListener(v -> {
             String message = editMessage.getText().toString();
             String secondsStr = editSeconds.getText().toString();
