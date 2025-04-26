@@ -9,6 +9,7 @@ import androidx.appcompat.app.AppCompatActivity;
 public class MainActivity extends AppCompatActivity {
 
     Button btnAbrirTimer;
+    Button btnAbrirLembrete;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -16,6 +17,8 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         btnAbrirTimer = findViewById(R.id.btnAbrirTimer);
+        btnAbrirLembrete = findViewById(R.id.btnAbrirLembrete);
+
         btnAbrirTimer.setOnClickListener(v -> {
             Intent intent = new Intent(this, TimerActivity.class);
             startActivity(intent);
