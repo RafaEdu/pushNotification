@@ -13,3 +13,5 @@
 .externalNativeBuild
 .cxx
 local.properties
+gradle/libs.versions.toml
+.idea/gradle.xml
