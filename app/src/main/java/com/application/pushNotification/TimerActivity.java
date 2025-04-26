@@ -24,21 +24,29 @@ public class TimerActivity extends AppCompatActivity {
         btnStartTimer.setOnClickListener(v -> {
             String secondsStr = editSeconds.getText().toString();
             if (!secondsStr.isEmpty()) {
-                int seconds = Integer.parseInt(secondsStr);
+                try {
+                    int seconds = Integer.parseInt(secondsStr);
+                    if (seconds > 0) {
+                        Intent serviceIntent = new Intent(this, TimerService.class);
+                        serviceIntent.putExtra(TimerService.EXTRA_SECONDS, seconds);
 
-                Intent serviceIntent = new Intent(this, TimerService.class);
-                serviceIntent.putExtra(TimerService.EXTRA_SECONDS, seconds);
+                        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                            startForegroundService(serviceIntent);
+                        } else {
+                            startService(serviceIntent);
+                        }
 
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-                    startForegroundService(serviceIntent);
-                } else {
-                    startService(serviceIntent);
+                        Toast.makeText(this, "Cronômetro iniciado para " + seconds + " segundos!", Toast.LENGTH_SHORT).show();
+                    } else {
+                        Toast.makeText(this, "Digite um número maior que zero!", Toast.LENGTH_SHORT).show();
+                    }
+                } catch (NumberFormatException e) {
+                    Toast.makeText(this, "Digite um número válido!", Toast.LENGTH_SHORT).show();
                 }
-
-                Toast.makeText(this, "Cronômetro iniciado para " + seconds + " segundos!", Toast.LENGTH_SHORT).show();
             } else {
                 Toast.makeText(this, "Digite os segundos!", Toast.LENGTH_SHORT).show();
             }
+            editSeconds.setText("");
         });
     }
 }
