@@ -10,14 +10,18 @@ import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TimePicker;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.NotificationCompat;
 
+import java.util.Calendar;
+
 public class LembreteActivity extends AppCompatActivity {
 
-    private EditText editMessage, editSeconds;
+    private EditText editMessage;
+    private TimePicker timePicker;
     private Button btnSetReminder;
 
     @Override
@@ -26,37 +30,74 @@ public class LembreteActivity extends AppCompatActivity {
         setContentView(R.layout.activity_lembrete);
 
         editMessage = findViewById(R.id.editMessage);
-        editSeconds = findViewById(R.id.editSeconds);
+        timePicker = findViewById(R.id.timePicker);
+        timePicker.setIs24HourView(true);
         btnSetReminder = findViewById(R.id.btnSetReminder);
 
         createNotificationChannel();
 
         btnSetReminder.setOnClickListener(v -> {
             String message = editMessage.getText().toString();
-            String secondsStr = editSeconds.getText().toString();
+            int hour = timePicker.getHour();
+            int minute = timePicker.getMinute();
 
-            if (message.isEmpty() || secondsStr.isEmpty()) {
-                Toast.makeText(this, "Preencha todos os campos!", Toast.LENGTH_SHORT).show();
-                return;
+            if (!message.isEmpty()) {
+                Calendar now = Calendar.getInstance();
+                Calendar reminderTime = Calendar.getInstance();
+                reminderTime.set(Calendar.HOUR_OF_DAY, hour);
+                reminderTime.set(Calendar.MINUTE, minute);
+                reminderTime.set(Calendar.SECOND, 0);
+
+                if (reminderTime.before(now)) {
+                    reminderTime.add(Calendar.DATE, 1); // Se o horário já passou, agenda para o dia seguinte
+                }
+
+                long millisUntilReminder = reminderTime.getTimeInMillis() - now.getTimeInMillis();
+                startReminderTimer(millisUntilReminder, message);
+
+                showNotification("Lembrete agendado","Seu lembrete foi agendado para as "
+                        + String.format("%02d:%02d", hour, minute));
+
+                // Voltar para MainActivity depois de agendar
+                Intent intent = new Intent(LembreteActivity.this, MainActivity.class);
+                startActivity(intent);
+                finish(); // fecha o LembreteActivity para não ficar empilhado
+            } else {
+                Toast.makeText(this, "Digite uma mensagem para o lembrete", Toast.LENGTH_SHORT).show();
             }
-
-            int seconds = Integer.parseInt(secondsStr);
-            startReminderTimer(seconds, message);
         });
+
     }
 
-    private void startReminderTimer(int seconds, String message) {
-        new CountDownTimer(seconds * 1000L, 1000) {
-            public void onTick(long millisUntilFinished) {
-                btnSetReminder.setText("Faltam: " + millisUntilFinished / 1000 + "s");
-            }
+    private long calculateMillisUntil(int hour, int minute) {
+        Calendar now = Calendar.getInstance();
+        Calendar reminderTime = (Calendar) now.clone();
+        reminderTime.set(Calendar.HOUR_OF_DAY, hour);
+        reminderTime.set(Calendar.MINUTE, minute);
+        reminderTime.set(Calendar.SECOND, 0);
+        reminderTime.set(Calendar.MILLISECOND, 0);
 
+        if (reminderTime.before(now)) {
+            // Se o horário for antes do agora, significa que é para o dia seguinte
+            reminderTime.add(Calendar.DAY_OF_MONTH, 1);
+        }
+
+        return reminderTime.getTimeInMillis() - now.getTimeInMillis();
+    }
+
+    private void startReminderTimer(long millisUntilReminder, String message) {
+        new CountDownTimer(millisUntilReminder, 1000) {
+            @Override
+            public void onTick(long millisUntilFinished) {
+                // Você pode ignorar aqui, não precisa fazer nada
+            }
+            @Override
             public void onFinish() {
-                showNotification("Aviso de lembrete", message);
-                btnSetReminder.setText("Agendar Lembrete");
+                showNotification("Lembrete:", message);
             }
         }.start();
     }
+
 
     private void showNotification(String title, String message) {
         Intent intent = new Intent(this, MainActivity.class);
@@ -71,7 +112,9 @@ public class LembreteActivity extends AppCompatActivity {
                 .setAutoCancel(true);
 
         NotificationManager manager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
-        manager.notify(2, builder.build());
+
+        int notificationId = (int) System.currentTimeMillis();
+        manager.notify(notificationId, builder.build());
     }
 
     private void createNotificationChannel() {
