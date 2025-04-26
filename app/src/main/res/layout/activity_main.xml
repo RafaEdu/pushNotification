@@ -10,12 +10,12 @@
         android:id="@+id/btnAbrirTimer"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Abrir Cronômetro" />
+        android:text="@string/abrir_cronometro" />
 
     <Button
         android:id="@+id/btnAbrirLembrete"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Abrir Lembrete" />
+        android:text="@string/abrir_lembrete" />
 
 </LinearLayout>

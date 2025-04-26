@@ -11,19 +11,19 @@
         android:id="@+id/editMessage"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="Mensagem do lembrete" />
+        android:hint="@string/lembrete_mensagem" />
 
     <EditText
         android:id="@+id/editSeconds"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:inputType="number"
-        android:hint="Tempo (segundos)" />
+        android:hint="@string/quanto_tempo"
+        android:inputType="number" />
 
     <Button
         android:id="@+id/btnSetReminder"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Agendar Lembrete"
-        android:layout_marginTop="16dp" />
+        android:layout_marginTop="16dp"
+        android:text="@string/agendar_lembrete" />
 </LinearLayout>

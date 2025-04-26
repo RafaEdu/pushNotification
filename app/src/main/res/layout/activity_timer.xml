@@ -12,13 +12,13 @@
         android:id="@+id/editSeconds"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="Segundos para o cronômetro"
+        android:hint="@string/segundos_do_cronometro"
         android:inputType="number" />
 
     <Button
         android:id="@+id/btnStartTimer"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Iniciar Cronômetro"
-        android:layout_marginTop="16dp"/>
+        android:layout_marginTop="16dp"
+        android:text="@string/iniciar_cronometro" />
 </LinearLayout>
