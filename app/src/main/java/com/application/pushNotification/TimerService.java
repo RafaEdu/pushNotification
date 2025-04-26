@@ -35,7 +35,7 @@ public class TimerService extends Service {
         Log.d("TimerService", "Service started with timer for " + seconds + " seconds.");
 
 
-        startForeground(1, getNotification("Cronômetro iniciado"));
+        startForeground(1, getNotification("Timer iniciado"));
 
         new CountDownTimer(seconds * 1000L, 1000) {
             public void onTick(long millisUntilFinished) {
@@ -56,15 +56,26 @@ public class TimerService extends Service {
     }
 
     private void updateNotification(int remainingSeconds) {
+        String timeFormatted = formatSecondsToTime(remainingSeconds);
+
         Notification notification = new NotificationCompat.Builder(this, CHANNEL_ID)
                 .setContentTitle("Timer")
-                .setContentText("Remaining time: " + remainingSeconds + " seconds")
+                .setContentText("Tempo restante: " + timeFormatted)
                 .setSmallIcon(R.drawable.ic_launcher_foreground)
                 .setPriority(NotificationCompat.PRIORITY_HIGH)
                 .build();
 
         NotificationManager notificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
         notificationManager.notify(1, notification);
+    }
+
+    // Método para formatar notificação em HH:MM:SS
+    private String formatSecondsToTime(int totalSeconds) {
+        int hours = totalSeconds / 3600;
+        int minutes = (totalSeconds % 3600) / 60;
+        int seconds = totalSeconds % 60;
+
+        return String.format("%02d:%02d:%02d", hours, minutes, seconds);
     }
 
     private Notification getNotification(String message) {
