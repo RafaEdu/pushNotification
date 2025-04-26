@@ -3,7 +3,7 @@
     <string name="lembrete_mensagem">Mensagem do lembrete:</string>
     <string name="quanto_tempo">Tempo (segundos)</string>
     <string name="agendar_lembrete">Agendar lembrete!</string>
-    <string name="abrir_cronometro">Abrir Cronômetro</string>
+    <string name="abrir_cronometro">Abrir Timer</string>
     <string name="abrir_lembrete">Abrir Lembrete</string>
     <string name="segundos_do_cronometro">Segundos para o cronômetro:</string>
     <string name="iniciar_cronometro">Iniciar Cronômetro</string>

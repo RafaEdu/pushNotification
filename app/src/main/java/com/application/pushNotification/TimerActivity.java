@@ -4,13 +4,15 @@ import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 import android.widget.Button;
-import android.widget.EditText;
+import android.widget.NumberPicker;
 import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 
 public class TimerActivity extends AppCompatActivity {
 
-    private EditText editSeconds;
+    private NumberPicker numberPickerHours;
+    private NumberPicker numberPickerMinutes;
+    private NumberPicker numberPickerSeconds;
     private Button btnStartTimer;
 
     @Override
@@ -18,35 +20,42 @@ public class TimerActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_timer);
 
-        editSeconds = findViewById(R.id.editSeconds);
+        numberPickerHours = findViewById(R.id.numberPickerHours);
+        numberPickerMinutes = findViewById(R.id.numberPickerMinutes);
+        numberPickerSeconds = findViewById(R.id.numberPickerSeconds);
         btnStartTimer = findViewById(R.id.btnStartTimer);
 
+
+        numberPickerHours.setMinValue(0);
+        numberPickerHours.setMaxValue(23);
+
+        numberPickerMinutes.setMinValue(0);
+        numberPickerMinutes.setMaxValue(59);
+
+        numberPickerSeconds.setMinValue(0);
+        numberPickerSeconds.setMaxValue(59);
+
         btnStartTimer.setOnClickListener(v -> {
-            String secondsStr = editSeconds.getText().toString();
-            if (!secondsStr.isEmpty()) {
-                try {
-                    int seconds = Integer.parseInt(secondsStr);
-                    if (seconds > 0) {
-                        Intent serviceIntent = new Intent(this, TimerService.class);
-                        serviceIntent.putExtra(TimerService.EXTRA_SECONDS, seconds);
+            int hours = numberPickerHours.getValue();
+            int minutes = numberPickerMinutes.getValue();
+            int seconds = numberPickerSeconds.getValue();
 
-                        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-                            startForegroundService(serviceIntent);
-                        } else {
-                            startService(serviceIntent);
-                        }
+            int totalSeconds = (hours * 3600) + (minutes * 60) + seconds;
 
-                        Toast.makeText(this, "Cronômetro iniciado para " + seconds + " segundos!", Toast.LENGTH_SHORT).show();
-                    } else {
-                        Toast.makeText(this, "Digite um número maior que zero!", Toast.LENGTH_SHORT).show();
-                    }
-                } catch (NumberFormatException e) {
-                    Toast.makeText(this, "Digite um número válido!", Toast.LENGTH_SHORT).show();
+            if (totalSeconds > 0) {
+                Intent serviceIntent = new Intent(this, TimerService.class);
+                serviceIntent.putExtra(TimerService.EXTRA_SECONDS, totalSeconds);
+
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                    startForegroundService(serviceIntent);
+                } else {
+                    startService(serviceIntent);
                 }
+
+                Toast.makeText(this, "Cronômetro iniciado!", Toast.LENGTH_SHORT).show();
             } else {
-                Toast.makeText(this, "Digite os segundos!", Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, "Por favor, defina um tempo válido!", Toast.LENGTH_SHORT).show();
             }
-            editSeconds.setText("");
         });
     }
 }

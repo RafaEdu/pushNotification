@@ -34,21 +34,21 @@ public class TimerService extends Service {
 
         Log.d("TimerService", "Service started with timer for " + seconds + " seconds.");
 
-        // Show the notification while the timer is running
+
         startForeground(1, getNotification("Cronômetro iniciado"));
 
         new CountDownTimer(seconds * 1000L, 1000) {
             public void onTick(long millisUntilFinished) {
-                // Update the notification during the countdown
+
                 int remainingSeconds = (int) (millisUntilFinished / 1000);
                 Log.d("TimerService", "Timer ticking, " + remainingSeconds + " seconds remaining.");
-                updateNotification(remainingSeconds);  // Update notification with remaining time
+                updateNotification(remainingSeconds);
             }
 
             public void onFinish() {
                 Log.d("TimerService", "Timer finished!");
                 showFinishNotification();
-                stopSelf();  // Stop the service after the timer finishes
+                stopSelf();
             }
         }.start();
 
@@ -64,7 +64,7 @@ public class TimerService extends Service {
                 .build();
 
         NotificationManager notificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
-        notificationManager.notify(1, notification);  // Update the notification with remaining time
+        notificationManager.notify(1, notification);
     }
 
     private Notification getNotification(String message) {
@@ -88,7 +88,7 @@ public class TimerService extends Service {
                 .setSmallIcon(R.drawable.ic_launcher_foreground)
                 .setPriority(NotificationCompat.PRIORITY_HIGH)
                 .build();
-        notificationManager.notify(2, notification);  // Use a unique ID for the finish notification
+        notificationManager.notify(2, notification);
     }
 
     private void createNotificationChannel() {
