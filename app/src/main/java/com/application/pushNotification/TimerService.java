@@ -65,10 +65,11 @@ public class TimerService extends Service {
         String timeFormatted = formatSecondsToTime(remainingSeconds);
 
         Notification notification = new NotificationCompat.Builder(this, CHANNEL_ID)
-                .setContentTitle("Timer")
+                .setContentTitle("Cronômetro")
                 .setContentText("Tempo restante: " + timeFormatted)
                 .setSmallIcon(R.drawable.ic_launcher_foreground)
-                .setPriority(NotificationCompat.PRIORITY_HIGH)
+                .setPriority(NotificationCompat.PRIORITY_LOW)
+                .setOnlyAlertOnce(true)
                 .build();
 
         NotificationManager notificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
@@ -87,15 +88,16 @@ public class TimerService extends Service {
     // Função para criar a notificação inicial
     private Notification getNotification(String message) {
         return new NotificationCompat.Builder(this, CHANNEL_ID)
-                .setContentTitle("Timer")
+                .setContentTitle("Cronômetro")
                 .setContentText(message)
                 .setSmallIcon(R.drawable.ic_launcher_foreground)
-                .setPriority(NotificationCompat.PRIORITY_HIGH)
+                .setPriority(NotificationCompat.PRIORITY_LOW)
+                .setOnlyAlertOnce(true)
                 .setVisibility(NotificationCompat.VISIBILITY_PUBLIC)
-                .setDefaults(Notification.DEFAULT_ALL)
                 .setAutoCancel(true)
                 .build();
     }
+
 
     // Função para mostrar uma notificação quando o cronômetro terminar
     private void showFinishNotification() {
