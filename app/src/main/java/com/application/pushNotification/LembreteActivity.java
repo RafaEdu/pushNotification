@@ -2,8 +2,6 @@ package com.application.pushNotification;
 
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
-import android.app.PendingIntent;
-import android.content.Context;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
@@ -13,7 +11,6 @@ import android.widget.TimePicker;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.app.NotificationCompat;
 
 import java.util.Calendar;
 
@@ -80,7 +77,7 @@ public class LembreteActivity extends AppCompatActivity {
 
         return reminderTime.getTimeInMillis() - now.getTimeInMillis();
     }
-    
+
     private void createNotificationChannel() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             CharSequence name = "Canal do Timer";
