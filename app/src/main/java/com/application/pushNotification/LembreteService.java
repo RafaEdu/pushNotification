@@ -37,6 +37,9 @@ public class LembreteService extends Service {
         // Pega o tempo até o lembrete e a mensagem
         long millisUntilReminder = intent.getLongExtra(EXTRA_MILLIS, 0);
         String message = intent.getStringExtra(EXTRA_MESSAGE);
+        String timeFormatted = formatMilissecondsToTime(millisUntilReminder);
+
+        startForeground(1, getNotification(message, timeFormatted));
 
         // Cria um timer
         countDownTimer = new CountDownTimer(millisUntilReminder, 1000) {
@@ -83,6 +86,25 @@ public class LembreteService extends Service {
             NotificationManager manager = getSystemService(NotificationManager.class);
             manager.createNotificationChannel(serviceChannel);
         }
+    }
+
+    // Função para criar a notificação inicial
+    public Notification getNotification(String message, String timeFormatted) {
+        Notification notification = new NotificationCompat.Builder(this, CHANNEL_ID)
+                .setContentTitle("Lembrete")
+                .setContentText(message + " foi definido para daqui " + timeFormatted)
+                .setSmallIcon(R.drawable.ic_launcher_foreground)
+                .setPriority(NotificationCompat.PRIORITY_HIGH)
+                .build();
+        return notification;
+    }
+
+    // Função para formatar o tempo de milissegundos para o formato HH:MM:SS
+    public String formatMilissecondsToTime(long millisUntilFinished) {
+        int hours = (int) (millisUntilFinished / (1000 * 60 * 60));
+        int minutes = (int) ((millisUntilFinished % (1000 * 60 * 60)) / (1000 * 60));
+        int seconds = (int) ((millisUntilFinished % (1000 * 60)) / 1000);
+        return String.format("%02d:%02d:%02d", hours, minutes, seconds);
     }
 
     // Método obrigatório
