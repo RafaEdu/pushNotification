@@ -54,9 +54,6 @@ public class LembreteActivity extends AppCompatActivity {
                     startService(serviceIntent);
                 }
 
-                showNotification("Lembrete agendado", "Seu lembrete foi agendado para as "
-                        + String.format("%02d:%02d", hour, minute));
-
                 // Voltar para MainActivity depois de agendar
                 Intent intent = new Intent(LembreteActivity.this, MainActivity.class);
                 startActivity(intent);
