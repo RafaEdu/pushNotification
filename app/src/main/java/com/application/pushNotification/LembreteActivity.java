@@ -80,25 +80,7 @@ public class LembreteActivity extends AppCompatActivity {
 
         return reminderTime.getTimeInMillis() - now.getTimeInMillis();
     }
-
-    private void showNotification(String title, String message) {
-        Intent intent = new Intent(this, MainActivity.class);
-        PendingIntent pendingIntent = PendingIntent.getActivity(this, 0, intent, PendingIntent.FLAG_IMMUTABLE);
-
-        NotificationCompat.Builder builder = new NotificationCompat.Builder(this, "timer_channel")
-                .setSmallIcon(R.drawable.ic_launcher_foreground)
-                .setContentTitle(title)
-                .setContentText(message)
-                .setPriority(NotificationCompat.PRIORITY_HIGH)
-                .setContentIntent(pendingIntent)
-                .setAutoCancel(true);
-
-        NotificationManager manager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
-
-        int notificationId = (int) System.currentTimeMillis();
-        manager.notify(notificationId, builder.build());
-    }
-
+    
     private void createNotificationChannel() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             CharSequence name = "Canal do Timer";
