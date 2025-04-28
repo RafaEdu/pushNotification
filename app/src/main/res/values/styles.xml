@@ -1,3 +1,0 @@
-<style name="NumberPickerStyleDark" parent="Widget.Material.NumberPicker">
-    <item name="android:textColorPrimary">#FFFFFF</item>
-</style>
