@@ -27,9 +27,10 @@ public class LembreteActivity extends AppCompatActivity {
 
         editMessage = findViewById(R.id.editMessage);
         timePicker = findViewById(R.id.timePicker);
-        timePicker.setIs24HourView(true);
+        timePicker.setIs24HourView(true); //Formato 24hrs
         btnSetReminder = findViewById(R.id.btnSetReminder);
 
+        // Cria o canal de notificação necessário, android 8+
         createNotificationChannel();
 
         btnSetReminder.setOnClickListener(v -> {
@@ -40,7 +41,7 @@ public class LembreteActivity extends AppCompatActivity {
             if (!message.isEmpty()) {
                 long millisUntilReminder = calculateMillisUntil(hour, minute);
 
-                // 👉 Iniciar o LembreteService
+                // Inicia o LembreteService
                 Intent serviceIntent = new Intent(this, LembreteService.class);
                 serviceIntent.putExtra(LembreteService.EXTRA_MILLIS, millisUntilReminder);
                 serviceIntent.putExtra(LembreteService.EXTRA_MESSAGE, message);
@@ -62,9 +63,11 @@ public class LembreteActivity extends AppCompatActivity {
 
     }
 
+    //Calcula quanto tempo (em milissegundos) falta até o horário escolhido.
+    //Caso seja anterior ao horário atual considera uma notiifcação para o dia seguinte.
     private long calculateMillisUntil(int hour, int minute) {
-        Calendar now = Calendar.getInstance();
-        Calendar reminderTime = (Calendar) now.clone();
+        Calendar now = Calendar.getInstance(); // Obtém a data e hora atuais
+        Calendar reminderTime = (Calendar) now.clone(); // Clona para manipular o horário do lembrete
         reminderTime.set(Calendar.HOUR_OF_DAY, hour);
         reminderTime.set(Calendar.MINUTE, minute);
         reminderTime.set(Calendar.SECOND, 0);
@@ -75,6 +78,7 @@ public class LembreteActivity extends AppCompatActivity {
             reminderTime.add(Calendar.DAY_OF_MONTH, 1);
         }
 
+        // Retorna a diferença entre o horário do lembrete e o atual em milissegundos
         return reminderTime.getTimeInMillis() - now.getTimeInMillis();
     }
 
