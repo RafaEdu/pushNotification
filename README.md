@@ -16,26 +16,28 @@ Disciplina de Desenvolvimento de Aplicações para Dispositivos Móveis. UNIVATE
 
 ## Prints de Tela:
 
-## Tela Principal
-![Tela Principal](prints/tela-home.jpg)
+## Prints de Tela:
 
-## Tela Cronômetro
-![Tela Cronômetro](prints/tela-cronometro.jpg)
+<h4>Tela Principal</h4>
+<img src="prints/tela-home.jpg" alt="Tela Principal" width="400"/>
 
-## Tela Lembrete
-![Tela Lembrete](prints/tela-lembrete.jpg)
+<h4>Tela Cronômetro</h4>
+<img src="prints/tela-cronometro.jpg" alt="Tela Cronômetro" width="400"/>
 
-## Notificação Definição Lembrete
-![Notificação Definição Lembrete](prints/tela-definicao-lembrete.jpg)
+<h4>Tela Lembrete</h4>
+<img src="prints/tela-lembrete.jpg" alt="Tela Lembrete" width="400"/>
 
-## Notificação Lembrete Finalizado
-![Notificação Lembrete Finalizado](prints/tela-notifica-lembrete-finalizado.jpg)
+<h4>Notificação Definição Lembrete</h4>
+<img src="prints/tela-definicao-lembrete.jpg" alt="Notificação Definição Lembrete" width="400"/>
 
-## Pop-up Cronômetro Iniciado
-![Pop-up Cronômetro Iniciado](prints/popup-crono-iniciado.jpg)
+<h4>Notificação Lembrete Finalizado</h4>
+<img src="prints/tela-notifica-lembrete-finalizado.jpg" alt="Notificação Lembrete Finalizado" width="400"/>
 
-## Notificação Cronômetro em andamento
-![Notificação Cronômetro em andamento](prints/tela-notifica-cronometro.jpg)
+<h4>Pop-up Cronômetro Iniciado</h4>
+<img src="prints/popup-crono-iniciado.jpg" alt="Pop-up Cronômetro Iniciado" width="400"/>
 
-## Notificação Cronômetro finalizado
-![Notificação Cronômetro finalizado](prints/tela-notifica-crono-finalizado.jpg)
+<h4>Notificação Cronômetro em andamento</h4>
+<img src="prints/tela-notifica-cronometro.jpg" alt="Notificação Cronômetro em andamento" width="400"/>
+
+<h4>Notificação Cronômetro finalizado</h4>
+<img src="prints/tela-notifica-crono-finalizado.jpg" alt="Notificação Cronômetro finalizado" width="400"/>
